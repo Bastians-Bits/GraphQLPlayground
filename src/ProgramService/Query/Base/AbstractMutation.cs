@@ -9,23 +9,23 @@ namespace ProgramService.Query.Base
 {
     public abstract class AbstractMutation<TInput, TEntity> where TEntity : class
 	{
-        protected async Task<IList<TInput>> Add(
+        protected async Task<IList<TInput>> Add (
             ProgramDbContext context,
             IMapper mapper,
-            IList<TInput> programs)
+            IList<TInput> inputs)
         {
-            var entities = mapper.Map<IList<TEntity>>(programs);
+            var entities = mapper.Map<IList<TEntity>>(inputs);
             context.Set<TEntity>().AddRange(entities);
             await context.SaveChangesAsync();
             return mapper.Map<IList<TInput>>(entities);
         }
 
-        protected async Task<IList<TInput>> Edit(
+        protected async Task<IList<TInput>> Edit (
             ProgramDbContext context,
             IMapper mapper,
-            IList<TInput> programs)
+            IList<TInput> inputs)
         {
-            var entities = mapper.Map<IList<TEntity>>(programs);
+            var entities = mapper.Map<IList<TEntity>>(inputs);
 
             var pk = context.Model.FindEntityType(typeof(TEntity))?
                 .FindPrimaryKey();
@@ -55,6 +55,42 @@ namespace ProgramService.Query.Base
             await context.SaveChangesAsync();
             return mapper.Map<IList<TInput>>(entities);
         }
+
+        protected async Task<IList<TInput>> Delete (
+            ProgramDbContext context,
+            IMapper mapper,
+            IList<TInput> inputs)
+        {
+            var entities = mapper.Map<IList<TEntity>>(inputs);
+
+            var pk = context.Model.FindEntityType(typeof(TEntity))?
+                .FindPrimaryKey();
+
+            if (pk == null || pk.Properties == null)
+                throw new Exception($"Could not load pk of type {typeof(TEntity)}");
+
+            foreach (var entity in entities)
+            {
+                int count = context.Set<TEntity>()
+                    .WithPk(entity, pk.Properties, false)
+                    .Count();
+
+                if (count == 1)
+                {
+                    // update
+                    context.Set<TEntity>().Remove(entity);
+                }
+                else
+                {
+                    throw new Exception(
+                        $"Entity does not exists or more than once"
+                    );
+                }
+            }
+
+            await context.SaveChangesAsync();
+            return mapper.Map<IList<TInput>>(entities);
+        }
     }
 
     public static class DbSetWithPk
@@ -68,7 +104,7 @@ namespace ProgramService.Query.Base
         /// <param name="properties">The IProperty-List with the primary key fields. Can be loaded through the db context</param>
         /// <param name="queryNull">If null values should be added to the query</param>
         /// <returns></returns>
-        public static IQueryable<TEntity> WithPk<TEntity>(
+        public static IQueryable<TEntity> WithPk<TEntity> (
             this DbSet<TEntity> entities,
             TEntity entity,
             IReadOnlyList<Microsoft.EntityFrameworkCore.Metadata.IProperty> properties,
