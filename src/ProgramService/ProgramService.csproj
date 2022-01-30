@@ -1,0 +1,46 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="HotChocolate.AspNetCore" />
+    <None Remove="Type\" />
+    <None Remove="Query\" />
+    <None Remove="HotChocolate.Data" />
+    <None Remove="Microsoft.EntityFrameworkCore.Sqlite" />
+    <None Remove="Entity\" />
+    <None Remove="Database\" />
+    <None Remove="HotChocolate.Types.Selections" />
+    <None Remove="AutoMapper.Extensions.Microsoft.DependencyInjection" />
+    <None Remove="AutoMapper.EF6" />
+    <None Remove="Mapper\" />
+    <None Remove="Microsoft.EntityFrameworkCore.Design" />
+    <None Remove="Query\Base\" />
+    <None Remove="System.Linq.Dynamic.Core" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="HotChocolate.AspNetCore" Version="12.6.0" />
+    <PackageReference Include="HotChocolate.Data" Version="12.6.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="6.0.1" />
+    <PackageReference Include="HotChocolate.Types.Selections" Version="10.5.5" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
+    <PackageReference Include="AutoMapper.EF6" Version="2.1.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.1">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="System.Linq.Dynamic.Core" Version="1.2.15" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Type\" />
+    <Folder Include="Query\" />
+    <Folder Include="Entity\" />
+    <Folder Include="Database\" />
+    <Folder Include="Mapper\" />
+    <Folder Include="Query\Base\" />
+  </ItemGroup>
+</Project>
