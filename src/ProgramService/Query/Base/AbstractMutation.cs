@@ -36,7 +36,7 @@ namespace ProgramService.Query.Base
             foreach (var entity in entities)
             {
                 int count = context.Set<TEntity>()
-                    .WithPk(entity, pk.Properties)
+                    .WithPk(entity, pk.Properties, false)
                     .Count();
 
                 if (count == 1)
@@ -66,11 +66,13 @@ namespace ProgramService.Query.Base
         /// <param name="entities">The DbSet the query is loaded for</param>
         /// <param name="entity">The entity the query is loaded for</param>
         /// <param name="properties">The IProperty-List with the primary key fields. Can be loaded through the db context</param>
+        /// <param name="queryNull">If null values should be added to the query</param>
         /// <returns></returns>
         public static IQueryable<TEntity> WithPk<TEntity>(
             this DbSet<TEntity> entities,
             TEntity entity,
-            IReadOnlyList<Microsoft.EntityFrameworkCore.Metadata.IProperty> properties)
+            IReadOnlyList<Microsoft.EntityFrameworkCore.Metadata.IProperty> properties,
+            bool queryNull)
             where TEntity : class
         {
             if (properties.Count == 1)
@@ -93,8 +95,11 @@ namespace ProgramService.Query.Base
                     #pragma warning disable CS8602 // Dereference of a possibly null reference.
                     #pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
                     object id = entity.GetType().GetProperty(property.Name).GetValue(entity);
-                    #pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
-                    #pragma warning restore CS8602 // Dereference of a possibly null reference.
+#pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
+
+                    if (queryNull && id == null)
+                        continue;
 
                     if (query.Length == 0)
                         // Construct a new string
