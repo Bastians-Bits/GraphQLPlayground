@@ -1,7 +1,12 @@
 ﻿<Properties StartupConfiguration="{E4A9475C-D35A-4954-8685-3BBA32C2E4D9}|Default">
+  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.ItemProperties.ProgramService PreferredExecutionTarget="/Applications/Safari.app" />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workbench ActiveDocument="ProgramService/Query/Base/AbstractMutation.cs">
     <Files>
-      <File FileName="ProgramService/Query/Base/AbstractMutation.cs" Line="38" Column="17" />
+      <File FileName="ProgramService/Query/ProgramMutation.cs" Line="15" Column="41" />
+      <File FileName="ProgramService/Query/Base/AbstractMutation.cs" Line="46" Column="1" />
+      <File FileName="ProgramService/Query/TestMutation.cs" Line="24" Column="10" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -14,6 +19,7 @@
               <Node name="Database" expanded="True" />
               <Node name="Entity" expanded="True" />
               <Node name="Mapper" expanded="True" />
+              <Node name="Migrations" expanded="True" />
               <Node name="Query" expanded="True">
                 <Node name="Base" expanded="True" />
               </Node>
@@ -27,13 +33,12 @@
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
-  <MultiItemStartupConfigurations />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
-      <Breakpoint file="/Users/bastian/Project/ProgramHandler/src/ProgramService/Query/Base/AbstractMutation.cs" relfile="ProgramService/Query/Base/AbstractMutation.cs" line="29" column="1" />
+      <Breakpoint file="/Users/bastian/Project/ProgramHandler/src/ProgramService/Query/Base/AbstractMutation.cs" relfile="ProgramService/Query/Base/AbstractMutation.cs" line="28" column="1" />
+      <Breakpoint file="/Users/bastian/Project/ProgramHandler/src/ProgramService/Query/Base/AbstractMutation.cs" relfile="ProgramService/Query/Base/AbstractMutation.cs" line="68" column="1" />
+      <Breakpoint file="/Users/bastian/Project/ProgramHandler/src/ProgramService/Query/Base/AbstractMutation.cs" relfile="ProgramService/Query/Base/AbstractMutation.cs" line="42" column="1" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MonoDevelop.Ide.ItemProperties.ProgramService PreferredExecutionTarget="/Applications/Safari.app" />
 </Properties>

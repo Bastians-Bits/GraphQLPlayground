@@ -59,6 +59,14 @@ namespace ProgramService.Query.Base
 
     public static class DbSetWithPk
     {
+        /// <summary>
+        /// Load a .where with all the primar keys for the entity.
+        /// </summary>
+        /// <typeparam name="TEntity">The type of the entity. Has to be known by the databae context</typeparam>
+        /// <param name="entities">The DbSet the query is loaded for</param>
+        /// <param name="entity">The entity the query is loaded for</param>
+        /// <param name="properties">The IProperty-List with the primary key fields. Can be loaded through the db context</param>
+        /// <returns></returns>
         public static IQueryable<TEntity> WithPk<TEntity>(
             this DbSet<TEntity> entities,
             TEntity entity,
