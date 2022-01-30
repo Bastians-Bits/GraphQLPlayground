@@ -111,41 +111,27 @@ namespace ProgramService.Query.Base
             bool queryNull)
             where TEntity : class
         {
-            if (properties.Count == 1)
+            // We could use multiple .where(...), but that would have serious performance impacts
+            string query = string.Empty;
+            foreach (Microsoft.EntityFrameworkCore.Metadata.IProperty property in properties)
             {
-                // Single Pk
                 #pragma warning disable CS8602 // Dereference of a possibly null reference.
                 #pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
-                object id = entity.GetType().GetProperty(properties[0].Name).GetValue(entity);
+                object id = entity.GetType().GetProperty(property.Name).GetValue(entity);
                 #pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
                 #pragma warning restore CS8602 // Dereference of a possibly null reference.
 
-                return entities.Where($"w => w.{properties[0].Name} == \"{id}\"");
-            }  else
-            {
-                // Multiple Pk
-                // We could use multiple .where(...), but that would have serious performance impacts
-                string query = string.Empty;
-                foreach (Microsoft.EntityFrameworkCore.Metadata.IProperty property in properties)
-                {
-                    #pragma warning disable CS8602 // Dereference of a possibly null reference.
-                    #pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
-                    object id = entity.GetType().GetProperty(property.Name).GetValue(entity);
-                    #pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
-                    #pragma warning restore CS8602 // Dereference of a possibly null reference.
+                if (queryNull && id == null)
+                    continue;
 
-                    if (queryNull && id == null)
-                        continue;
-
-                    if (query.Length == 0)
-                        // Construct a new string
-                        query = $"w.{property.Name} == \"{id}\"";
-                    else
-                        // Append to an existing one
-                        query += $" && w.{property.Name} == \"{id}\"";
-                }
-                return entities.Where($"w => {query}");
+                if (query.Length == 0)
+                    // Construct a new string
+                    query = $"w.{property.Name} == \"{id}\"";
+                else
+                    // Append to an existing one
+                    query += $" && w.{property.Name} == \"{id}\"";
             }
+            return entities.Where($"w => {query}");
         }
     }
 }
